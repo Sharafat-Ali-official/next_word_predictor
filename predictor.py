@@ -1,5 +1,11 @@
 import random
+import os  # NEW: For handling file paths
 
+# ---------- YOUR DATASET FILE PATH ----------
+# This tells Python exactly where to find dataset.txt
+DATASET_PATH = r"C:\Users\USER69\Desktop\AI_LLM\next_word_predictor\dataset.txt"
+
+# ---------- Helper functions ----------
 def read_dataset(filename):
     """Open the file and read all sentences into a list."""
     file = open(filename, 'r', encoding='utf-8')
@@ -103,7 +109,8 @@ def main():
     print("=== Next-Word Predictor (Beginner Edition) ===")
     print("Type 'quit' to exit.\n")
     
-    sentences = read_dataset("dataset.txt")
+    # Use the full path to dataset.txt
+    sentences = read_dataset(DATASET_PATH)
     transitions = build_dictionary(sentences)
     
     while True:
@@ -121,7 +128,7 @@ def main():
             if add_choice.lower() == "y":
                 sentences.append(user_input)
                 learn_new_sentence(transitions, user_input)
-                save_dataset("dataset.txt", sentences)
+                save_dataset(DATASET_PATH, sentences)  # Save to the full path
                 print("Added! Now I can learn from it.\n")
             continue
         
@@ -142,7 +149,7 @@ def main():
             
             full_sentence = user_input + " " + correct_word
             sentences.append(full_sentence)
-            save_dataset("dataset.txt", sentences)
+            save_dataset(DATASET_PATH, sentences)  # Save to the full path
             print("Thanks! I've updated my knowledge.\n")
         
         add_new = input("Would you like to add a brand new sentence for training? (y/n): ")
@@ -150,7 +157,7 @@ def main():
             new_sentence = input("Type the new sentence: ")
             sentences.append(new_sentence)
             learn_new_sentence(transitions, new_sentence)
-            save_dataset("dataset.txt", sentences)
+            save_dataset(DATASET_PATH, sentences)  # Save to the full path
             print("Added to dataset and memory!\n")
 
 if __name__ == "__main__":
